@@ -1,0 +1,33 @@
+---
+# file: tasks/install.yml
+# Top-level installer for Oracle JDK.
+#
+
+- include: fetch.yml
+
+- name: delegate to RPM installation process
+  include: use-rpm.yml
+  when: ansible_pkg_mgr == "yum"
+
+
+- block:
+
+    - name: make sure /etc/profile.d exists
+      file: path=/etc/profile.d  state=directory
+
+    - name: export JAVA_HOME
+      template:
+        src:  ../templates/java_home.sh.j2
+        dest: /etc/profile.d/java_home.sh
+        mode: "a+x"
+
+  when: java_set_javahome
+
+
+- name: remove temporary downloaded files, if requested
+  file: path={{ item }} state=absent
+  with_items:
+    - "{{ java_download_path }}/{{ jdk_tarball_file }}.rpm"
+    - "{{ java_download_path }}/check-tarball-installed.sh"
+  ignore_errors: true
+  when: java_remove_download

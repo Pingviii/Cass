@@ -1,0 +1,12 @@
+---
+- hosts: nodes
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - include: 'tasks/main.yml'
+
+  vars_files:
+    - 'defaults/main.yml'
+
+

@@ -1,0 +1,20 @@
+---
+
+#
+# variables needed to be defined in user's playbook
+#
+
+
+
+#
+# user-configurable defaults
+#
+java_uninstall: false
+
+java_version: 8
+java_subversion: 112
+
+java_download_path: /tmp
+java_remove_download: true
+
+java_set_javahome: true
