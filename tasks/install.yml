@@ -31,3 +31,6 @@
     - "{{ java_download_path }}/check-tarball-installed.sh"
   ignore_errors: true
   when: java_remove_download
+
+
+

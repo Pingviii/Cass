@@ -4,11 +4,12 @@ williamyeh.oracle-java for Ansible Galaxy (edited by Oleh Seniuk olegservice@gma
 
 ## Summary
 
-This Ansible role has the following features for Oracle JDK:
+This Ansible role has the following features:
 
  - Install JDK 8 version.
  - Install for CentOS.
- - Uninstall JDK.
+ - Uninstall JDK. (optionally)
+ - Install Apache Cassandra.
 
 ## Role Variables
 
@@ -39,4 +40,10 @@ java_remove_download: true
 
 # set $JAVA_HOME?
 java_set_javahome: true
+
+# which version?
+cassandra_version: 3
+
+# which subversion?
+cassandra_subversion: 6
 ```

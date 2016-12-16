@@ -1,0 +1,21 @@
+---
+# file: tasks/cassandra.yml
+# Top-level installer for Apache Cassandra 3.6
+#
+
+- name: add distribution to rep
+  copy: src="../files/datastax.repo"  dest="/etc/yum.repos.d/"  #mode="a+x"
+
+- name: replace line
+  replace:
+   dest: /etc/yum.repos.d/datastax.repo
+   regexp: 'baseurl = http://rpm.datastax.com/datastax-ddc/*.*'
+   replace: 'baseurl = http://rpm.datastax.com/datastax-ddc/{{ cassandra_version }}.{{ cassandra_subversion }}'
+
+#- name: installation
+#  yum:
+#    name: datastax-ddc
+#    state: present
+
+#- name: start service
+#  command: /etc/init.d/cassandra start

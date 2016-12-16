@@ -1,0 +1,5 @@
+[datastax]
+name = Datastax Repo for Apache Cassandra
+baseurl = http://rpm.datastax.com/datastax-ddc/3.6
+enabled = 1
+gpgcheck = 0
