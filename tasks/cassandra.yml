@@ -12,10 +12,32 @@
    regexp: 'baseurl = http://rpm.datastax.com/datastax-ddc/*.*'
    replace: 'baseurl = http://rpm.datastax.com/datastax-ddc/{{ cassandra_version }}.{{ cassandra_subversion }}'
 
-#- name: installation
-#  yum:
-#    name: datastax-ddc
-#    state: present
+- name: installation
+  yum:
+    name: datastax-ddc
+    state: present
 
-#- name: start service
-#  command: /etc/init.d/cassandra start
+- name: clear the data
+  command: rm -rf /var/lib/cassandra/data/system/*
+
+
+#- name: replace default line in config, add list of seeds
+#  replace:
+#   dest: /etc/cassandra/default.conf/cassandra.yaml
+#   regexp: '- seeds: *.*.*.*'
+#   replace: "- seeds: {{groups['seeds'][0]}}"
+
+#- name: replace default line in config, add listen address2 #if it's no first time we change config, maybe is the better way? 
+#  replace:
+#   dest: /etc/cassandra/default.conf/cassandra.yaml
+#   regexp: 'listen_address: *.*.*.*'
+#   replace: "listen_address: {{ groups['seeds'][0] }} "
+
+#- name: replace default line in config, add listen address #if it's a first time for changing conf
+#  replace:
+#   dest: /etc/cassandra/default.conf/cassandra.yaml
+#   regexp: 'listen_address: localhost'
+#   replace: "listen_address: {{ groups['seeds'][0] }} "
+
+- name: start service
+  command: /etc/init.d/cassandra start

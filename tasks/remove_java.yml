@@ -1,8 +1,0 @@
----
-# uninstall jdk
-
-- name: uninstall jdk
-  yum: 
-    name: jdk
-    state: absent
-

@@ -3,10 +3,10 @@
 # Top-level installer for Oracle JDK.
 #
 
-- include: remove_java.yml
-  when: java_uninstall
+- include: remove.yml
+  when: uninstall
 
 - include: main_install.yml
-  when: not java_uninstall
+  when: not uninstall
 
 

@@ -15,6 +15,9 @@
 
 - include: set-role-variables.yml
 
+#- name: install libselinux-python #if selinux enforcing. don't necessary if selinux disabled
+#  yum: libselinux-python
+#  state: present
 
 - name: copy scripts to server
   copy: src="../files/check-java-version.sh"  dest="{{ java_download_path }}/"  mode="a+x"

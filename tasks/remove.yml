@@ -1,0 +1,21 @@
+---
+# uninstall jdk
+
+- name: uninstall jdk
+  yum: 
+    name: jdk
+    state: absent
+    
+- name: stop service
+  command: /etc/init.d/cassandra stop
+  
+- name: uninstall cassandra
+  yum:
+    name: datastax-ddc
+    state: absent
+
+- name: del config
+  file:
+    name: /etc/cassandra
+    state: absent
+

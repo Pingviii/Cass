@@ -9,7 +9,7 @@
 #
 # user-configurable defaults
 #
-java_uninstall: false
+uninstall: false
 
 java_version: 8
 java_subversion: 112
