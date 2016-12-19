@@ -8,7 +8,7 @@ This Ansible role has the following features:
 
  - Install JDK 8 version.
  - Install for CentOS.
- - Uninstall JDK. (optionally)
+ - Uninstall JDK and Apache Cassandra. (optionally)
  - Install Apache Cassandra.
 
 ## Role Variables
@@ -23,8 +23,8 @@ None.
 User-configurable defaults:
 
 ```yaml
-# uninstall?
-java_uninstall: false
+# uninstall java and cassandra?
+uninstall: false
 
 # which version?
 java_version: 8
