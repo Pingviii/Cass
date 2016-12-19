@@ -17,8 +17,8 @@
     name: datastax-ddc
     state: present
 
-- name: clear the data
-  command: rm -rf /var/lib/cassandra/data/system/*
+#- name: clear the data
+#  command: rm -rf /var/lib/cassandra/data/system/*
 
 
 #- name: replace default line in config, add list of seeds
