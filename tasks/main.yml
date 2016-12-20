@@ -6,7 +6,10 @@
 - include: remove.yml
   when: uninstall
 
+- include: restart.yml
+  when: restart and (not uninstall) 
+
 - include: main_install.yml
-  when: not uninstall
+  when: (not uninstall) and (not restart)
 
 

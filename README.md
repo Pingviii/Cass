@@ -26,6 +26,9 @@ User-configurable defaults:
 # uninstall java and cassandra?
 uninstall: false
 
+# restart cassandra?
+restart: false
+
 # which version?
 java_version: 8
 

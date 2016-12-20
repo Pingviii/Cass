@@ -1,6 +1,6 @@
 ---
 # file: tasks/cassandra.yml
-# Top-level installer for Apache Cassandra 3.6
+# Top-level installer for Apache Cassandra
 #
 
 - name: add distribution to rep
@@ -17,27 +17,38 @@
     name: datastax-ddc
     state: present
 
-#- name: clear the data
-#  command: rm -rf /var/lib/cassandra/data/system/*
+- name: replace default line in config, add list of seeds
+  replace:
+   dest: /etc/cassandra/default.conf/cassandra.yaml
+   regexp: '- seeds: *.*.*.*'
+   replace: '- seeds: "{{groups["seeds"][0]}}"'
 
+- name: replace default line in config, add listen address2 #if it's no first time we change config, maybe is the better way? 
+  replace:
+   dest: /etc/cassandra/default.conf/cassandra.yaml
+   regexp: 'listen_address: *.*.*.*'
+   replace: "listen_address: {{ansible_default_ipv4.address}}  "
 
-#- name: replace default line in config, add list of seeds
-#  replace:
-#   dest: /etc/cassandra/default.conf/cassandra.yaml
-#   regexp: '- seeds: *.*.*.*'
-#   replace: "- seeds: {{groups['seeds'][0]}}"
-
-#- name: replace default line in config, add listen address2 #if it's no first time we change config, maybe is the better way? 
-#  replace:
-#   dest: /etc/cassandra/default.conf/cassandra.yaml
-#   regexp: 'listen_address: *.*.*.*'
-#   replace: "listen_address: {{ groups['seeds'][0] }} "
-
-#- name: replace default line in config, add listen address #if it's a first time for changing conf
-#  replace:
-#   dest: /etc/cassandra/default.conf/cassandra.yaml
-#   regexp: 'listen_address: localhost'
-#   replace: "listen_address: {{ groups['seeds'][0] }} "
+- name: replace default line in config, add listen address #if it's a first time for changing conf
+  replace:
+   dest: /etc/cassandra/default.conf/cassandra.yaml
+   regexp: 'listen_address: localhost'
+   replace: "listen_address: {{ansible_default_ipv4.address}}"
+   
+- name: replace default line in config, add snitch method from variable
+  replace:
+   dest: /etc/cassandra/default.conf/cassandra.yaml
+   regexp: 'endpoint_snitch: SimpleSnitch'
+   replace: "endpoint_snitch: {{snitch}}"
 
 - name: start service
   command: /etc/init.d/cassandra start
+
+# in case of hardware crash, if we will set up a new node with exactly the same IP, we catch a bug:
+# java.lang.RuntimeException: A node with address /<yours_ip> already exists, cancelling join. 
+# Use cassandra.replace_address if you want to replace this node.
+# Solving this bug http://blog.alteroot.org/articles/2014-03-12/replace-a-dead-node-in-cassandra.html 
+- lineinfile:
+    dest: /etc/cassandra/default.conf/cassandra-env.sh
+    state: present
+    line: JVM_OPTS="$JVM_OPTS -Dcassandra.replace_address={{ansible_default_ipv4.address}}" 

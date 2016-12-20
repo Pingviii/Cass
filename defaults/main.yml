@@ -11,6 +11,8 @@
 #
 uninstall: false
 
+restart: false
+
 java_version: 8
 java_subversion: 112
 
@@ -21,3 +23,5 @@ java_set_javahome: true
 
 cassandra_version: 3
 cassandra_subversion: 6
+
+snitch: GossipingPropertyFileSnitch

@@ -19,3 +19,6 @@
     name: /etc/cassandra
     state: absent
 
+- name: clear the data
+  shell: /bin/rm -rf /var/lib/cassandra/data/system/*
+
