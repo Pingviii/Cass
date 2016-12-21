@@ -1,5 +1,5 @@
 
-williamyeh.oracle-java for Ansible Galaxy (edited by Oleh Seniuk olegservice@gmail.com)
+playbooks for install java by: williamyeh.oracle-java and for install Apache Cassandra by Oleh Seniuk olegservice@gmail.com
 ============
 
 ## Summary
@@ -10,6 +10,7 @@ This Ansible role has the following features:
  - Install for CentOS.
  - Uninstall JDK and Apache Cassandra. (optionally)
  - Install Apache Cassandra.
+ - Run stress-test for Apache Cassandra. 
 
 ## Role Variables
 
