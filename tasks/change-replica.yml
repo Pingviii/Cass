@@ -1,0 +1,49 @@
+---
+# file: tasks/change-replica.yml
+# change replication topology and factor (optionally: for new cluster)
+# 
+
+#- name: change topology and factor (if keyspace1 is not default keyspace - you have to change!!!)
+#  command: cqlsh.py [options] [host [port]]
+#cqlsh -e DESCRIBE KEYSPACES localhost
+#  command: cqlsh ALTER KEYSPACE "keyspace1" WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'dc1' : 3 };
+#
+#
+# If we have a new cluster it has a defaul replication factor 1. It's a problem for running stress-test, and not proper at all.
+# More detailed about this issue here: http://stackoverflow.com/questions/27974911/not-enough-replica-available-for-query-at-consistency-one-1-required-but-only-0
+# so, if we want to fix: 
+# NOW MUST USES MANUALLY :(
+#
+# on one node:
+# - cqlsh
+# - ALTER KEYSPACE "keyspace1" WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'dc1' : 3 };  #if not exists - CREATE
+#
+# every node:
+# - service cassandra stop
+# - rm -rf /var/lib/cassandra/data/system/*
+# - service cassandra start
+# - nodetool repair -dc dc1
+#
+# and finally, will make sure that nodes are still present
+# - nodetool status
+ 
+- pause:
+    seconds: 10
+
+- include: restart.yml
+
+- pause:
+    seconds: 10
+
+- name: change topology and factor (if dc1 is not default datacenter - you have to change!!!)
+  command: nodetool repair -dc dc1
+
+- name: monitoring nodes
+  command: nodetool status
+  register: status
+
+- debug: msg="{{ status.stdout }}"
+- debug: msg="{{ status.stderr }}"
+
+
+

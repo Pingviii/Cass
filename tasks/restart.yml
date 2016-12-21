@@ -1,0 +1,29 @@
+---
+# file: tasks/restart.yml
+# restart Apache Cassandra service
+#
+
+- name: stop service
+  command: service cassandra stop
+
+- pause:
+    seconds: 5
+
+- name: clear the data
+  shell: /bin/rm -rf /var/lib/cassandra/data/system/*
+
+- pause:
+    seconds: 3
+
+- name: start service
+  command: service cassandra start
+
+- pause:
+    seconds: 10
+
+- name: monitoring nodes
+  command: nodetool status
+  register: status
+
+- debug: msg="{{ status.stdout }}"
+- debug: msg="{{ status.stderr }}"

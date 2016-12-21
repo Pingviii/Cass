@@ -29,6 +29,9 @@ uninstall: false
 # restart cassandra?
 restart: false
 
+# run stress test for Cassandra?
+run_stress_test: false
+
 # which version?
 java_version: 8
 
