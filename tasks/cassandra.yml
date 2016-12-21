@@ -52,3 +52,5 @@
     dest: /etc/cassandra/default.conf/cassandra-env.sh
     state: present
     line: JVM_OPTS="$JVM_OPTS -Dcassandra.replace_address={{ansible_default_ipv4.address}}" 
+
+

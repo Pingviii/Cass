@@ -1,5 +1,5 @@
 ---
-# uninstall jdk
+# uninstall jdk and cassandra
 
 - name: uninstall jdk
   yum: 

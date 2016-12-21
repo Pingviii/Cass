@@ -1,6 +1,6 @@
 ---
 # file: tasks/main.yml
-# Top-level installer for Oracle JDK.
+# Top-level installer for Oracle JDK and Apache Cassandra.
 #
 
 - name: precondition - java_version
@@ -33,3 +33,13 @@
   when: (jdk_info.stdout|from_json).not_found
 
 - include: cassandra.yml
+
+- pause:
+    seconds: 10
+
+- name: monitoring nodes
+  command: nodetool status
+  register: status
+
+- debug: msg="{{ status.stdout }}"
+- debug: msg="{{ status.stderr }}"

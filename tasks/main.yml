@@ -4,12 +4,15 @@
 #
 
 - include: remove.yml
-  when: uninstall
+  when: uninstall and (not run_stress_test) and (not restart)
 
 - include: restart.yml
-  when: restart and (not uninstall) 
+  when: restart and (not uninstall) and (not run_stress_test) 
 
 - include: main_install.yml
-  when: (not uninstall) and (not restart)
+  when: (not uninstall) and (not restart) and (not run_stress_test)
+
+- include: run-stress-test.yml
+  when: (not uninstall) and (not restart) and (run_stress_test)
 
 
