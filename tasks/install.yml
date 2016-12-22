@@ -1,6 +1,6 @@
 ---
 # file: tasks/install.yml
-# Top-level installer for Oracle JDK.
+# Top-level installer.
 #
 
 - include: fetch.yml
